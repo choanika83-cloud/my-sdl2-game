@@ -1,3 +1,3 @@
 # My Game
 
-this is a project for my first SDL3 game
+this is a project for my first SDL2 game
