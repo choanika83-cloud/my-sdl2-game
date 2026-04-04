@@ -2,7 +2,12 @@
 #include <SDL_image.h>
 #include <iostream>
 using namespace std;
-// function for drawing using general equation of a circle
+
+// Screen constants for collision checking
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
+
+// function for drawing circle using general equation of a circle
  void drawCircle(SDL_Renderer* renderer, int centerX, int centerY, int radius) {
     int thickness = 1; 
     
@@ -26,8 +31,15 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_VIDEO);
-    SDL_Window* window = SDL_CreateWindow("Circle", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, 0);
+    SDL_Window* window = SDL_CreateWindow("Growing Circle", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, 0);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+    // Circle animation variables
+    int centerX = SCREEN_WIDTH / 2 ;
+    int centerY = SCREEN_HEIGHT / 2;
+    float initialRadius = 10.0f;
+    float currentRadius = initialRadius;
+    float growthSpeed = 0.5f;
 
     bool isRunning = true;
     SDL_Event event;
@@ -37,14 +49,27 @@ int main(int argc, char* argv[]) {
             if (event.type == SDL_QUIT) isRunning = false;
         }
 
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderClear(renderer);
+    // Increase the radius
+        currentRadius += growthSpeed;
 
-        // Draw the outline in white
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        drawCircle(renderer, 400, 300, 100);
+    // Reset if it hits window boundaries
+    if (400 + currentRadius >= 800 || 400 - currentRadius <= 0 ||
+        300 + currentRadius >= 600 || 300 - currentRadius <= 0) {
+        currentRadius = 10.0f; 
+    }
+    
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Set color to Black
+    SDL_RenderClear(renderer);                      // Clear the whole screen
 
-        SDL_RenderPresent(renderer);
+    // 4. THE DRAWING
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // Set color to White
+    drawCircle(renderer, 400, 300, (int)currentRadius);   // Draw the NEW circle
+
+    // 5. THE DISPLAY (Must happen AFTER drawing)
+    SDL_RenderPresent(renderer);
+
+        // Frame rate limit so the growth is visible
+        SDL_Delay(16);
     }
 
     SDL_DestroyRenderer(renderer);
