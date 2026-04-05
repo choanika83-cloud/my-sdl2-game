@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
 
     // The drawing
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // Set color to White
-    drawCircle(renderer, 400, 300, (int)currentRadius);   // Draw the NEW circle
+    drawCircle(renderer, 400, 300, (int)currentRadius);   // Draw the new circle
 
     // Display circle
     SDL_RenderPresent(renderer);
