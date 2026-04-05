@@ -1,3 +1,3 @@
 # My Game
 
-this is a project for my first SDL2 game
+swe_pw_10x(task 103 is in branch 2)
