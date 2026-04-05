@@ -1,28 +1,32 @@
-#include <SDL.h>
-#include <SDL_image.h>
+#include <SDL2/SDL.h>
 #include <iostream>
-using namespace std;
 
-// Screen constants for collision checking
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
-// function for drawing circle using general equation of a circle
- void drawCircle(SDL_Renderer* renderer, int centerX, int centerY, int radius) {
-    int thickness = 1; 
+// Function to draw a circle 
+
+void drawCircle(SDL_Renderer* renderer, int centerX, int centerY, int radius, bool isColliding) {
+    int thickness = 2; 
     
-    for (int i = 0; i < radius * 2 + thickness; i++) {
-        for (int j = 0; j < radius * 2 + thickness; j++) {
-            int dx = radius - i; 
-            int dy = radius - j;
+    // Visual effect of collision: Red if colliding, White if safe
+    if (isColliding) {
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    } else {
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    }
+    
+    for (int w = 0; w < radius * 2 + thickness; w++) {
+        for (int h = 0; h < radius * 2 + thickness; h++) {
+            int dx = radius - w; 
+            int dy = radius - h;
             
-            // Calculation of distance squared
-            int Distsq = (dx * dx + dy * dy);
+            // Calculate distance squared
+            int distSq = (dx * dx + dy * dy);
             
-            // Check if the pixel is on the "edge"
-            // We check if it's between (r-1)^2 and (r)^2
-            if (Distsq >= (radius - thickness) * (radius - thickness) && 
-                Distsq <= (radius * radius)) {
+            // Check if the pixel is on the edge
+            if (distSq >= (radius - thickness) * (radius - thickness) && 
+                distSq <= (radius * radius)) {
                 SDL_RenderDrawPoint(renderer, centerX + dx, centerY + dy);
             }
         }
@@ -31,15 +35,20 @@ const int SCREEN_HEIGHT = 600;
 
 int main(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_VIDEO);
-    SDL_Window* window = SDL_CreateWindow("Growing Circle", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, 0);
+    SDL_Window* window = SDL_CreateWindow("Circles Collision", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-    // Circle animation variables
-    int centerX = SCREEN_WIDTH / 2 ;
-    int centerY = SCREEN_HEIGHT / 2;
-    float initialRadius = 10.0f;
-    float currentRadius = initialRadius;
-    float growthSpeed = 0.5f;
+    // Circle 1: Moves left to right continuously
+    float c1X = 0.0;
+    float c1Y = 300.0;
+    int c1Radius = 40;
+    float c1Speed = 3.0f;
+
+    // Circle 2: Controlled by user (Starting at center width, top)
+    float c2X = SCREEN_WIDTH / 2.0f;
+    float c2Y = 0.0f; 
+    int c2Radius = 40;
+    float c2Speed = 5.0f;
 
     bool isRunning = true;
     SDL_Event event;
@@ -49,26 +58,41 @@ int main(int argc, char* argv[]) {
             if (event.type == SDL_QUIT) isRunning = false;
         }
 
-    // Increase the radius
-        currentRadius += growthSpeed;
+        // Handle input for circle 2
+        const Uint8* state = SDL_GetKeyboardState(NULL);
+        if (state[SDL_SCANCODE_UP])    c2Y -= c2Speed;
+        if (state[SDL_SCANCODE_DOWN])  c2Y += c2Speed;
+        if (state[SDL_SCANCODE_LEFT])  c2X -= c2Speed;
+        if (state[SDL_SCANCODE_RIGHT]) c2X += c2Speed;
 
-    // Reset if it hits window boundaries
-    if (400 + currentRadius >= 800 || 400 - currentRadius <= 0 ||
-        300 + currentRadius >= 600 || 300 - currentRadius <= 0) {
-        currentRadius = 10.0f; 
-    }
-    
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Set color to Black
-    SDL_RenderClear(renderer);                      // Clear the whole screen
+        // Update circle (Automated Movement)
+        c1X += c1Speed;
+        // If it goes off the right edge, wrap it back to the left edge
+        if (c1X > SCREEN_WIDTH + c1Radius) {
+            c1X = -c1Radius;
+        }
 
-    // 4. THE DRAWING
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // Set color to White
-    drawCircle(renderer, 400, 300, (int)currentRadius);   // Draw the NEW circle
+        // Ditermine collision
+        // Distance formula: (x2 - x1)^2 + (y2 - y1)^2
+        float dx = c2X - c1X;
+        float dy = c2Y - c1Y;
+        float distanceSquared = (dx * dx) + (dy * dy);
+        
+        // They collide if distance is less than the sum of their radii
+        int radiusSum = c1Radius + c2Radius;
+        bool isColliding = distanceSquared <= (radiusSum * radiusSum);
 
-    // 5. THE DISPLAY (Must happen AFTER drawing)
-    SDL_RenderPresent(renderer);
+        
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderClear(renderer);
 
-        // Frame rate limit so the growth is visible
+        // Draw both circles passing the collision state
+        drawCircle(renderer, (int)c1X, (int)c1Y, c1Radius, isColliding);
+        drawCircle(renderer, (int)c2X, (int)c2Y, c2Radius, isColliding);
+
+        SDL_RenderPresent(renderer);
+
+        // Frame rate limit
         SDL_Delay(16);
     }
 
@@ -77,4 +101,3 @@ int main(int argc, char* argv[]) {
     SDL_Quit();
     return 0;
 }
-
