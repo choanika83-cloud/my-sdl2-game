@@ -22,8 +22,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
 
 # 5. Define Executable
-file(GLOB_RECURSE SOURCES "src/*.cpp")
-add_executable(MyGame ${SOURCES})
+add_executable(MyGame "src/l.cpp")
 
 # 6. OS Specific RPATH
 if(APPLE) 
