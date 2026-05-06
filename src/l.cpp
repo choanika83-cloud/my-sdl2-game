@@ -14,15 +14,14 @@ using namespace std;
     SDL_RenderFillRect(renderer, &segment);
 
     if(count == 0)
-    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); //head in blue
 
     else
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); //other parts in white
+ 
     count++;
     X += 21;
     
-
   }
 }    
     
@@ -44,7 +43,7 @@ int main(int argc, char* argv[]) {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
-        // Draw the snake in white
+        
         
         drawSnake(renderer, 400, 300);
 
