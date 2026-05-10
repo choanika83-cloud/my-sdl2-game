@@ -1,11 +1,23 @@
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
-#include<cmath>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
+
+const int screenWidth = 800;
+const int screenHight = 600;
+int w = 100;
+int h = 100;
+int X;
+int Y;
+SDL_Rect segment;
+
+
 // function to draw a snake
  void drawSnake(SDL_Renderer* renderer, int X, int Y) {
-  
+    
   int count = 0;
   while (count < 5)
   {
@@ -14,22 +26,39 @@ using namespace std;
     SDL_RenderFillRect(renderer, &segment);
 
     if(count == 0)
-    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); //head in blue
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); // head in blue
 
     else
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); //other parts in white
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // other parts in white
  
     count++;
-    X += 21;
-    
+    X += 21; 
   }
-}    
+}
+
+void randomRect(SDL_Renderer* renderer, int* w, int* h)
+{
+    SDL_Rect segment_food;
+    if(*w != screenWidth && *h != screenHight)
+    {
+        if(*w == 100 && *h == 100) {
+            SDL_Rect segment_food = {*w, *h, 20, 20};
+             SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+         SDL_RenderFillRect(renderer, &segment_food);
+       }
+    
+        
+        
+    }
+     
+    }
+
     
 
 
 int main(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_VIDEO);
-    SDL_Window* window = SDL_CreateWindow("Snake", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, 0);
+    SDL_Window* window = SDL_CreateWindow("Snake", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screenWidth, screenHight, 0);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     bool isRunning = true;
@@ -46,6 +75,7 @@ int main(int argc, char* argv[]) {
         
         
         drawSnake(renderer, 400, 300);
+        randomRect(renderer, &w, &h);
 
         SDL_RenderPresent(renderer);
     }

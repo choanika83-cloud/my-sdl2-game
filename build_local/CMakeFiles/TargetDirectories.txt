@@ -1,0 +1,14 @@
+D:/snakeGame/build_local/CMakeFiles/MyGame.dir
+D:/snakeGame/build_local/CMakeFiles/edit_cache.dir
+D:/snakeGame/build_local/CMakeFiles/rebuild_cache.dir
+D:/snakeGame/build_local/vendor/SDL/CMakeFiles/sdl_headers_copy.dir
+D:/snakeGame/build_local/vendor/SDL/CMakeFiles/SDL2main.dir
+D:/snakeGame/build_local/vendor/SDL/CMakeFiles/SDL2.dir
+D:/snakeGame/build_local/vendor/SDL/CMakeFiles/SDL2-static.dir
+D:/snakeGame/build_local/vendor/SDL/CMakeFiles/SDL2_test.dir
+D:/snakeGame/build_local/vendor/SDL/CMakeFiles/uninstall.dir
+D:/snakeGame/build_local/vendor/SDL/CMakeFiles/edit_cache.dir
+D:/snakeGame/build_local/vendor/SDL/CMakeFiles/rebuild_cache.dir
+D:/snakeGame/build_local/vendor/SDL_image/CMakeFiles/SDL2_image.dir
+D:/snakeGame/build_local/vendor/SDL_image/CMakeFiles/edit_cache.dir
+D:/snakeGame/build_local/vendor/SDL_image/CMakeFiles/rebuild_cache.dir

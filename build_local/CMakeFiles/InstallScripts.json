@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"D:/snakeGame/build_local/cmake_install.cmake",
+		"D:/snakeGame/build_local/vendor/SDL/cmake_install.cmake",
+		"D:/snakeGame/build_local/vendor/SDL_image/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

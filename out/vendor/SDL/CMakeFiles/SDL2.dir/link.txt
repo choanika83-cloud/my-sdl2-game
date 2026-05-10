@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\SDL2.dir/objects.a
+C:\msys64\ucrt64\bin\ar.exe qc CMakeFiles\SDL2.dir/objects.a @CMakeFiles\SDL2.dir\objects1.rsp
+C:\msys64\ucrt64\bin\cc.exe  -idirafter "D:/snakeGame/vendor/SDL/src/video/khronos"  -Wall -Wundef -fno-strict-aliasing -Wdeclaration-after-statement -fvisibility=hidden -Wshadow -Wno-unused-local-typedefs -mmmx -msse -msse2 -msse3  -DSDL_BUILD_MAJOR_VERSION=2 -DSDL_BUILD_MINOR_VERSION=33 -DSDL_BUILD_MICRO_VERSION=0 -shared -static-libgcc -o ..\..\SDL2.dll -Wl,--out-implib,libSDL2.dll.a -Wl,--major-image-version,2,--minor-image-version,33 -Wl,--whole-archive CMakeFiles\SDL2.dir/objects.a -Wl,--no-whole-archive @CMakeFiles\SDL2.dir\linkLibs.rsp
