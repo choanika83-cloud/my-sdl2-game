@@ -79,6 +79,7 @@ CMakeFiles/MyGame.dir/src/snake.cpp.obj: D:/snakeGame/src/snake.cpp \
   C:/msys64/ucrt64/include/c++/14.2.0/cstddef \
   C:/msys64/ucrt64/include/c++/14.2.0/cstdio \
   C:/msys64/ucrt64/include/c++/14.2.0/cstdlib \
+  C:/msys64/ucrt64/include/c++/14.2.0/ctime \
   C:/msys64/ucrt64/include/c++/14.2.0/cwchar \
   C:/msys64/ucrt64/include/c++/14.2.0/cwctype \
   C:/msys64/ucrt64/include/c++/14.2.0/debug/assertions.h \
@@ -552,6 +553,8 @@ C:/msys64/ucrt64/include/c++/14.2.0/cstddef:
 C:/msys64/ucrt64/include/c++/14.2.0/cstdio:
 
 C:/msys64/ucrt64/include/c++/14.2.0/cstdlib:
+
+C:/msys64/ucrt64/include/c++/14.2.0/ctime:
 
 C:/msys64/ucrt64/include/c++/14.2.0/cwchar:
 

@@ -8,8 +8,8 @@ using namespace std;
 
 const int screenWidth = 800;
 const int screenHight = 600;
-int w = 100;
-int h = 100;
+
+
 int X;
 int Y;
 SDL_Rect segment;
@@ -21,15 +21,14 @@ SDL_Rect segment;
   int count = 0;
   while (count < 5)
   {
-    
-    SDL_Rect segment = {X, Y, 20, 20};
-    SDL_RenderFillRect(renderer, &segment);
-
     if(count == 0)
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); // head in blue
 
     else
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // other parts in white
+
+     SDL_Rect segment = {X, Y, 20, 20};
+    SDL_RenderFillRect(renderer, &segment);
  
     count++;
     X += 21; 
@@ -39,24 +38,23 @@ SDL_Rect segment;
 void randomRect(SDL_Renderer* renderer, int* w, int* h)
 {
     SDL_Rect segment_food;
-    if(*w != screenWidth && *h != screenHight)
+    if(*w < screenWidth && *h < screenHight)
     {
-        if(*w == 100 && *h == 100) {
-            SDL_Rect segment_food = {*w, *h, 20, 20};
-             SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-         SDL_RenderFillRect(renderer, &segment_food);
-       }
-    
-        
-        
+        SDL_Rect segment_food = {*w, *h, 20, 20};
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // food in red
+        SDL_RenderFillRect(renderer, &segment_food);
     }
+ }
      
-    }
+    
 
     
 
 
 int main(int argc, char* argv[]) {
+    srand(time(0));
+    int w = rand() % 780;
+    int h = rand() % 580;
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Window* window = SDL_CreateWindow("Snake", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screenWidth, screenHight, 0);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
