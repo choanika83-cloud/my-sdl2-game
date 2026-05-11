@@ -57,12 +57,15 @@ CMakeFiles/MyGame.dir/src/snake.cpp.obj: D:/snakeGame/src/snake.cpp \
   C:/msys64/ucrt64/include/c++/14.2.0/bits/requires_hosted.h \
   C:/msys64/ucrt64/include/c++/14.2.0/bits/std_abs.h \
   C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_algobase.h \
+  C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_bvector.h \
   C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_construct.h \
   C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_function.h \
   C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_iterator.h \
   C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_iterator_base_funcs.h \
   C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_iterator_base_types.h \
   C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_pair.h \
+  C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_uninitialized.h \
+  C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_vector.h \
   C:/msys64/ucrt64/include/c++/14.2.0/bits/streambuf.tcc \
   C:/msys64/ucrt64/include/c++/14.2.0/bits/streambuf_iterator.h \
   C:/msys64/ucrt64/include/c++/14.2.0/bits/string_view.tcc \
@@ -70,6 +73,7 @@ CMakeFiles/MyGame.dir/src/snake.cpp.obj: D:/snakeGame/src/snake.cpp \
   C:/msys64/ucrt64/include/c++/14.2.0/bits/uses_allocator.h \
   C:/msys64/ucrt64/include/c++/14.2.0/bits/uses_allocator_args.h \
   C:/msys64/ucrt64/include/c++/14.2.0/bits/utility.h \
+  C:/msys64/ucrt64/include/c++/14.2.0/bits/vector.tcc \
   C:/msys64/ucrt64/include/c++/14.2.0/bits/version.h \
   C:/msys64/ucrt64/include/c++/14.2.0/cctype \
   C:/msys64/ucrt64/include/c++/14.2.0/cerrno \
@@ -108,6 +112,7 @@ CMakeFiles/MyGame.dir/src/snake.cpp.obj: D:/snakeGame/src/snake.cpp \
   C:/msys64/ucrt64/include/c++/14.2.0/tuple \
   C:/msys64/ucrt64/include/c++/14.2.0/type_traits \
   C:/msys64/ucrt64/include/c++/14.2.0/typeinfo \
+  C:/msys64/ucrt64/include/c++/14.2.0/vector \
   C:/msys64/ucrt64/include/c++/14.2.0/x86_64-w64-mingw32/bits/atomic_word.h \
   C:/msys64/ucrt64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++allocator.h \
   C:/msys64/ucrt64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++config.h \
@@ -328,14 +333,6 @@ D:/snakeGame/src/snake.cpp:
 
 C:/msys64/ucrt64/include/_mingw_mac.h:
 
-C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsaveintrin.h:
-
-C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clzerointrin.h:
-
-C:/msys64/ucrt64/include/c++/14.2.0/bits/basic_string.tcc:
-
-C:/msys64/ucrt64/include/c++/14.2.0/bits/streambuf_iterator.h:
-
 C:/msys64/ucrt64/include/c++/14.2.0/bits/basic_ios.tcc:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_algobase.h:
@@ -353,6 +350,14 @@ C:/msys64/ucrt64/include/wchar.h:
 C:/msys64/ucrt64/include/c++/14.2.0/bits/cpp_type_traits.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/functional_hash.h:
+
+C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xsaveintrin.h:
+
+C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/clzerointrin.h:
+
+C:/msys64/ucrt64/include/c++/14.2.0/bits/streambuf_iterator.h:
+
+C:/msys64/ucrt64/include/c++/14.2.0/bits/basic_string.tcc:
 
 C:/msys64/ucrt64/include/_mingw_stdarg.h:
 
@@ -450,6 +455,8 @@ C:/msys64/ucrt64/include/c++/14.2.0/bits/functexcept.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/hash_bytes.h:
 
+C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_uninitialized.h:
+
 C:/msys64/ucrt64/include/c++/14.2.0/bits/ios_base.h:
 
 C:/msys64/ucrt64/include/wctype.h:
@@ -472,6 +479,8 @@ C:/msys64/ucrt64/include/c++/14.2.0/bits/localefwd.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/memory_resource.h:
 
+C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_bvector.h:
+
 C:/msys64/ucrt64/include/c++/14.2.0/bits/move.h:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vnnivlintrin.h:
@@ -491,8 +500,6 @@ C:/msys64/ucrt64/include/c++/14.2.0/bits/requires_hosted.h:
 C:/msys64/ucrt64/include/time.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/ranges_base.h:
-
-C:/msys64/ucrt64/include/c++/14.2.0/bits/streambuf.tcc:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/sm4intrin.h:
 
@@ -516,6 +523,10 @@ C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_iterator_base_funcs.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_iterator_base_types.h:
 
+C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_vector.h:
+
+C:/msys64/ucrt64/include/c++/14.2.0/bits/streambuf.tcc:
+
 C:/msys64/ucrt64/include/c++/14.2.0/bits/stringfwd.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/uses_allocator.h:
@@ -523,6 +534,8 @@ C:/msys64/ucrt64/include/c++/14.2.0/bits/uses_allocator.h:
 C:/msys64/ucrt64/include/c++/14.2.0/bits/uses_allocator_args.h:
 
 C:/msys64/ucrt64/include/c++/14.2.0/bits/utility.h:
+
+C:/msys64/ucrt64/include/c++/14.2.0/bits/vector.tcc:
 
 D:/snakeGame/vendor/SDL/include/SDL_misc.h:
 
@@ -539,6 +552,8 @@ C:/msys64/ucrt64/include/c++/14.2.0/clocale:
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avxintrin.h:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/avx512vbmiintrin.h:
+
+C:/msys64/ucrt64/include/c++/14.2.0/vector:
 
 C:/msys64/ucrt64/include/c++/14.2.0/compare:
 
