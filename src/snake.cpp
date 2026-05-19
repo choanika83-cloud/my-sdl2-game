@@ -8,7 +8,7 @@
 #include<string>
 using namespace std;
 
-const int screenWidth = 800;
+const int screenWidth = 840;
 const int screenHeight = 640;
 vector<SDL_Rect> snakCoordinate;
 int score = 0;
@@ -21,8 +21,8 @@ SDL_Rect scoreRect = {10, 605, 120, 30};
 
 void randomRect(SDL_Renderer* renderer)
 { 
- w = (rand() % (screenWidth / 20)) * 20;
- h = (rand() % ((screenHeight - 40) / 20)) * 20;
+ w = 40 + (rand() % ((800 - 40 ) / 20)) * 20;
+ h = 20 + (rand() % ((600 - 20) / 20)) * 20;
 
  segment_food = {w, h, 20, 20};
  }
@@ -107,8 +107,12 @@ SDL_FreeSurface(scoreSurface);
 
  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
  SDL_RenderClear(renderer);
-SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-SDL_RenderDrawLine(renderer, 0, 600, 800, 600);
+ // The border
+SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+SDL_RenderDrawLine(renderer, 40, 600, 800, 600);
+SDL_RenderDrawLine(renderer, 40, 0, 40, 600);
+SDL_RenderDrawLine(renderer, 40, 0, 800, 0);
+SDL_RenderDrawLine(renderer, 800, 0, 800, 600);
  SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Draw the food
  SDL_RenderFillRect(renderer, &segment_food);
  drawSnake( renderer, snakCoordinate);
