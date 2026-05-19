@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\snakeGame.dir/objects.a
+C:\msys64\ucrt64\bin\ar.exe qc CMakeFiles\snakeGame.dir/objects.a @CMakeFiles\snakeGame.dir\objects1.rsp
+C:\msys64\ucrt64\bin\c++.exe -O3 -DNDEBUG -Wl,--no-keep-memory -Wl,--reduce-memory-overheads -Wl,--gc-sections -s -Wl,--whole-archive CMakeFiles\snakeGame.dir/objects.a -Wl,--no-whole-archive -o snakeGame.exe -Wl,--out-implib,libsnakeGame.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\snakeGame.dir\linkLibs.rsp

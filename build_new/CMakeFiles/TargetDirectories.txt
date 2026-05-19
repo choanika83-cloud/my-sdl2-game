@@ -1,0 +1,3 @@
+D:/pw/build_new/CMakeFiles/snakeGame.dir
+D:/pw/build_new/CMakeFiles/edit_cache.dir
+D:/pw/build_new/CMakeFiles/rebuild_cache.dir

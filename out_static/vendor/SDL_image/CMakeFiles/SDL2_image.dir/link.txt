@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\SDL2_image.dir/objects.a
-C:\msys64\ucrt64\bin\ar.exe qc CMakeFiles\SDL2_image.dir/objects.a @CMakeFiles\SDL2_image.dir\objects1.rsp
-C:\msys64\ucrt64\bin\cc.exe -shared -static-libgcc -Wl,--no-undefined -o ..\..\SDL2_image.dll -Wl,--out-implib,libSDL2_image.dll.a -Wl,--major-image-version,0,--minor-image-version,900 -Wl,--whole-archive CMakeFiles\SDL2_image.dir/objects.a -Wl,--no-whole-archive @CMakeFiles\SDL2_image.dir\linkLibs.rsp

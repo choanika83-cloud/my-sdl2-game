@@ -4,22 +4,27 @@
 #include<cstdlib>
 #include<ctime>
 #include<vector>
+#include<SDL_ttf.h>
+#include<string>
 using namespace std;
 
 const int screenWidth = 800;
-const int screenHeight = 600;
+const int screenHeight = 640;
 vector<SDL_Rect> snakCoordinate;
+int score = 0;
 int w;
 int h;
 SDL_Rect segment_food;
+TTF_Font* font = NULL;
+SDL_Texture* scoreText = NULL;
+SDL_Rect scoreRect = {10, 605, 120, 30};
 
 void randomRect(SDL_Renderer* renderer)
 { 
  w = (rand() % (screenWidth / 20)) * 20;
- h = (rand() % (screenHeight / 20)) * 20;
+ h = (rand() % ((screenHeight - 40) / 20)) * 20;
 
  segment_food = {w, h, 20, 20};
- 
  }
 
 void initializeSnake()
@@ -35,6 +40,7 @@ void initializeSnake()
 //movement function
 void snakeMovement(vector<SDL_Rect>& body, SDL_Renderer* renderer)
 {
+    
  SDL_Rect head = body.front();
 // handle input for snake
  const Uint8* state = SDL_GetKeyboardState(NULL);
@@ -46,8 +52,19 @@ void snakeMovement(vector<SDL_Rect>& body, SDL_Renderer* renderer)
  if(state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_DOWN] || state[SDL_SCANCODE_LEFT] || state[SDL_SCANCODE_RIGHT]) {
  body.insert(body.begin(), head);
  
- if(SDL_HasIntersection(&head, &segment_food))
- randomRect(renderer);
+if(SDL_HasIntersection(&head, &segment_food)) {
+randomRect(renderer);
+ score += 1;
+ string stringScore = "SCORE: " + to_string(score);
+SDL_Color white = {255, 255, 255, 255};
+SDL_Surface* scoreSurface = TTF_RenderText_Solid(font, stringScore.c_str(), white);
+if(scoreSurface != NULL) {
+    if(scoreText != NULL) {
+SDL_DestroyTexture(scoreText);}
+scoreText = SDL_CreateTextureFromSurface(renderer, scoreSurface);
+SDL_FreeSurface(scoreSurface);
+}}
+
  else 
  body.pop_back();
 }}
@@ -69,8 +86,16 @@ int main(int argc, char* argv[]) {
 
  srand(time(0));
  SDL_Init(SDL_INIT_VIDEO);
+ TTF_Init();
+ font = TTF_OpenFont("C:/Windows/Fonts/arial.ttf", 24);
+ if(font == NULL)
+    cout << "font error" << TTF_GetError() << endl;    
  SDL_Window* window = SDL_CreateWindow("Snake", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screenWidth, screenHeight, 0);
-SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);    
+SDL_Color white = {255, 255, 255, 255};
+SDL_Surface* scoreSurface = TTF_RenderText_Solid(font, "SCORE: 0", white);
+ scoreText = SDL_CreateTextureFromSurface(renderer, scoreSurface);
+SDL_FreeSurface(scoreSurface);
  initializeSnake(); 
  randomRect(renderer);
  bool isRunning = true;
@@ -82,9 +107,12 @@ SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED
 
  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
  SDL_RenderClear(renderer);
+SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+SDL_RenderDrawLine(renderer, 0, 600, 800, 600);
  SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Draw the food
  SDL_RenderFillRect(renderer, &segment_food);
  drawSnake( renderer, snakCoordinate);
+ SDL_RenderCopy(renderer, scoreText, NULL, &scoreRect);
 SDL_Delay(16);
  snakeMovement(snakCoordinate, renderer);
  SDL_RenderPresent(renderer);
