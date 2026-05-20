@@ -17,7 +17,9 @@ int h;
 SDL_Rect segment_food;
 TTF_Font* font = NULL;
 SDL_Texture* scoreText = NULL;
+SDL_Texture* messageText = NULL;
 SDL_Rect scoreRect = {10, 605, 120, 30};
+
 
 void randomRect(SDL_Renderer* renderer)
 { 
@@ -38,9 +40,10 @@ void initializeSnake()
 }
 
 //movement function
-void snakeMovement(vector<SDL_Rect>& body, SDL_Renderer* renderer)
+void snakeMovement(vector<SDL_Rect>& body, SDL_Renderer* renderer, bool &gameOver)
 {
-    
+  if(gameOver) 
+    return;  
  SDL_Rect head = body.front();
 // handle input for snake
  const Uint8* state = SDL_GetKeyboardState(NULL);
@@ -67,7 +70,27 @@ SDL_FreeSurface(scoreSurface);
 
  else 
  body.pop_back();
-}}
+
+// Collsion detection
+
+for(int i = 1; i < body.size(); i++) {
+    if(SDL_HasIntersection(&head, &body[i])) {
+        gameOver = true;
+    SDL_Color white = {255, 255, 255, 255};
+    SDL_Surface* messageSurface = TTF_RenderText_Solid(font, "GAME OVER", white);
+    messageText = SDL_CreateTextureFromSurface(renderer, messageSurface);
+    SDL_FreeSurface(messageSurface);
+    }
+        
+}
+
+if(head.x <= 40 || head.y <= 0 || head.x >= 780 || head.y >= 580) {
+    gameOver = true;
+    SDL_Color white = {255, 255, 255, 255};
+    SDL_Surface* messageSurface = TTF_RenderText_Solid(font, "GAME OVER", white);
+    messageText = SDL_CreateTextureFromSurface(renderer, messageSurface);
+    SDL_FreeSurface(messageSurface);
+}}}
 
 // function to draw a snake
 void drawSnake(SDL_Renderer* renderer, const vector<SDL_Rect>& body) {
@@ -99,6 +122,7 @@ SDL_FreeSurface(scoreSurface);
  initializeSnake(); 
  randomRect(renderer);
  bool isRunning = true;
+ bool gameOver = false;
   SDL_Event event;
  while (isRunning) {
  while (SDL_PollEvent(&event)) {
@@ -107,18 +131,29 @@ SDL_FreeSurface(scoreSurface);
 
  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
  SDL_RenderClear(renderer);
- // The border
-SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+
+if(!gameOver) {
+    drawSnake( renderer, snakCoordinate);
+    SDL_RenderCopy(renderer, scoreText, NULL, &scoreRect);
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 SDL_RenderDrawLine(renderer, 40, 600, 800, 600);
 SDL_RenderDrawLine(renderer, 40, 0, 40, 600);
 SDL_RenderDrawLine(renderer, 40, 0, 800, 0);
 SDL_RenderDrawLine(renderer, 800, 0, 800, 600);
  SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Draw the food
  SDL_RenderFillRect(renderer, &segment_food);
- drawSnake( renderer, snakCoordinate);
- SDL_RenderCopy(renderer, scoreText, NULL, &scoreRect);
+
+}
+
+else {
+    SDL_Rect messageRect = {300, 300, 200, 50};
+    SDL_RenderCopy(renderer, messageText, NULL, &messageRect);
+    SDL_RenderCopy(renderer, scoreText, NULL, &scoreRect);    
+}
+ 
+
 SDL_Delay(16);
- snakeMovement(snakCoordinate, renderer);
+ snakeMovement(snakCoordinate, renderer, gameOver);
  SDL_RenderPresent(renderer);
  }
  
