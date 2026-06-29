@@ -6,10 +6,13 @@
 #include<vector>
 #include<SDL_ttf.h>
 #include<string>
+
 using namespace std;
+
+// --- Constants & Globals ---
 const int screenWidth = 840;
 const int screenHeight = 640;
-std :: vector<SDL_Rect> snakCoordinate;
+vector<SDL_Rect> snakCoordinate;
 int score = 0;
 int w;
 int h;
@@ -19,10 +22,11 @@ SDL_Texture* scoreText = nullptr;
 SDL_Texture* messageText = nullptr;
 SDL_Rect scoreRect = {10, 605, 120, 30};
 
+// ----Randomly renders food---
 void randomRect(SDL_Renderer* renderer)
 { 
- w = 40 + (rand() % ((800 - 40 ) / 20)) * 20;
- h = 20 + (rand() % ((600 - 20) / 20)) * 20;
+w = 60 + (rand() % 37) * 20; 
+h = 60 + (rand() % 27) * 20;
 
  segment_food = {w, h, 20, 20};
  }
@@ -30,28 +34,32 @@ void randomRect(SDL_Renderer* renderer)
 void initializeSnake()
 {
  snakCoordinate.clear();
-// head at 400, 300
+// ---head at 400, 300----
  snakCoordinate.push_back({400, 300, 20, 20}); 
-// other body parts
+// ---other body parts---
  snakCoordinate.push_back({380, 300, 20, 20});
  snakCoordinate.push_back({360, 300, 20, 20});  
 }
 
-//movement function
+//-----Movement Function-------
 void snakeMovement(vector<SDL_Rect>& body, SDL_Renderer* renderer, bool &gameOver)
 {
   if(gameOver) 
     return;  
  SDL_Rect head = body.front();
-// handle input for snake
+
+//------ Handle Input for Snake------
  const Uint8* state = SDL_GetKeyboardState(NULL);
   if(state[SDL_SCANCODE_UP]) head.y -= 20;
 
-if(state[SDL_SCANCODE_DOWN]) head.y += 20;
+else if(state[SDL_SCANCODE_DOWN]) head.y += 20;
 
-if(state[SDL_SCANCODE_LEFT]) head.x -= 20;
+else if(state[SDL_SCANCODE_LEFT]) head.x -= 20;
 
-if(state[SDL_SCANCODE_RIGHT]) head.x += 20;
+else if(state[SDL_SCANCODE_RIGHT]) head.x += 20;
+
+if (body.size() > 1 && head.x == body[1].x && head.y == body[1].y) // prevent turn in opposite direction
+    return;
 
 
 if(state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_DOWN] || state[SDL_SCANCODE_LEFT] || state[SDL_SCANCODE_RIGHT]) {
@@ -77,9 +85,9 @@ SDL_FreeSurface(scoreSurface);
     body.pop_back();
 }
 
-// Collsion detection
+//------ Collsion Detection--------
 
-if(head.x < 40 || head.y < 40 || head.x > 800 || head.y > 600) {
+if(head.x <= 40 || head.y <= 40 || head.x >= 800 || head.y >= 600) {
     gameOver = true;
     SDL_Color white = {255, 255, 255, 255};
     SDL_Surface* messageSurface = TTF_RenderText_Solid(font, "GAME OVER", white);
@@ -94,9 +102,10 @@ if(scoreSurface != nullptr) {
 SDL_DestroyTexture(scoreText);}
 scoreText = SDL_CreateTextureFromSurface(renderer, scoreSurface);
 SDL_FreeSurface(scoreSurface);
-}}
+    }
+}
 
-for(int i = 3; i < body.size(); i++) {
+for(int i = 1; i < body.size(); i++) {
     if(SDL_HasIntersection(&head, &body[i])) {
         gameOver = true;
     SDL_Color white = {255, 255, 255, 255};
@@ -105,10 +114,11 @@ for(int i = 3; i < body.size(); i++) {
     SDL_FreeSurface(messageSurface);
     }
         
-}}
+    }
+}
 }
 
-// function to draw a snake
+//------Function to Draw a Snake------
 void drawSnake(SDL_Renderer* renderer, const vector<SDL_Rect>& body) {
  for(int i = 0; i < body.size(); i++) {
     if(i == 0)
@@ -121,8 +131,9 @@ void drawSnake(SDL_Renderer* renderer, const vector<SDL_Rect>& body) {
  }
 }
 
+// --- Main Loop ---
 int main(int argc, char* argv[]) {
-
+//---- Initialize game window & font-----
  srand(time(0));
  SDL_Init(SDL_INIT_VIDEO);
  TTF_Init();
@@ -137,6 +148,7 @@ SDL_Surface* scoreSurface = TTF_RenderText_Solid(font, "SCORE: 0", white);
 SDL_FreeSurface(scoreSurface);
  initializeSnake(); 
  randomRect(renderer);
+ 
  bool isRunning = true;
  bool gameOver = false;
   SDL_Event event;
@@ -148,20 +160,22 @@ SDL_FreeSurface(scoreSurface);
  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
  SDL_RenderClear(renderer);
 
-if(!gameOver) {
+if(!gameOver) 
+{
     drawSnake( renderer, snakCoordinate);
     SDL_RenderCopy(renderer, scoreText, nullptr, &scoreRect);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-SDL_RenderDrawLine(renderer, 40, 600, 800, 600);
-SDL_RenderDrawLine(renderer, 40, 40, 40, 600);
-SDL_RenderDrawLine(renderer, 40, 40, 800, 40);
-SDL_RenderDrawLine(renderer, 800, 40, 800, 600);
- SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Draw the food
- SDL_RenderFillRect(renderer, &segment_food);
+    SDL_RenderDrawLine(renderer, 40, 600, 800, 600);
+    SDL_RenderDrawLine(renderer, 40, 40, 40, 600);
+    SDL_RenderDrawLine(renderer, 40, 40, 800, 40);
+    SDL_RenderDrawLine(renderer, 800, 40, 800, 600);
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Draw the food
+    SDL_RenderFillRect(renderer, &segment_food);
 
 }
 
-else {
+else 
+{
     SDL_Delay(60);
     SDL_Rect messageRect = {300, 300, 200, 50};
     SDL_Rect scoreRect = {300, 350, 200, 50};
@@ -169,7 +183,7 @@ else {
     SDL_RenderCopy(renderer, scoreText, nullptr, &scoreRect);    
 }
  
-SDL_Delay(20);
+SDL_Delay(40);
  snakeMovement(snakCoordinate, renderer, gameOver);
  SDL_RenderPresent(renderer);
  }
@@ -179,3 +193,4 @@ SDL_Delay(20);
  SDL_Quit();
  return 0;
 }
+
